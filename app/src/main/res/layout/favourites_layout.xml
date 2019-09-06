@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    app:cardCornerRadius="10dp"
+    android:layout_marginTop="30dp"
+    app:cardUseCompatPadding="true">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:paddingLeft="3dp"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:gravity="center"
+            android:id="@+id/nameInFav"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:paddingLeft="3dp"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:gravity="center|start"
+            android:id="@+id/typeInFav"
+            android:layout_below="@id/nameInFav"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:gravity="center|start"
+            android:textColor="#000"
+            android:textSize="20sp"
+            android:id="@+id/costInFav"
+            android:paddingLeft="3dp"
+            android:layout_below="@id/typeInFav"/>
+
+        <ImageView
+            android:id="@+id/removeFromFav"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@+id/costInFav"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="-61dp"
+            android:layout_marginEnd="9dp"
+            android:layout_marginRight="9dp"
+            android:src="@drawable/ic_delete_black_24dp" />
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

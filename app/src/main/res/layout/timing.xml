@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/timing"
+        android:layout_width="wrap_content"
+        android:background="@drawable/dialog_bg"
+        android:layout_height="wrap_content"
+        android:text="Mon:	11am – 11pm
+    \nTue:	10:30am – 11pm
+    \nWed:	10:30am – 11pm
+    \nThu:	10:30am – 11pm
+    \nFri:	10:30am – 11pm
+    \nSat:	10:30am – 11pm
+    \nSun:	10:30am – 11pm"
+        android:textSize="25dp" />
+</LinearLayout>
