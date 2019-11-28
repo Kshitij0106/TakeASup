@@ -60,11 +60,10 @@ public class Login_Page extends Fragment {
 
                 if (Common.isConnectedToInternet(getActivity())) {
 
-                    final String userId = e1.getText().toString();
+                    String userId = e1.getText().toString();
                     String pass = e2.getText().toString();
 
                     e1.setText("");
-                    e2.setText("");
                     if (userId.isEmpty() && pass.isEmpty()) {
                         e1.setError("Enter Email Id");
                         e2.setError("Enter Password");
@@ -91,6 +90,7 @@ public class Login_Page extends Fragment {
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
+                                e2.setText("");
                                 Toast.makeText(getActivity(), "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
