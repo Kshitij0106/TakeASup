@@ -24,11 +24,7 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class HomePageFragment extends Fragment {
 
@@ -127,8 +123,8 @@ public class HomePageFragment extends Fragment {
                 case R.id.favNav:
                     gotofragment = new FavouritesFragment();
                     break;
-                case R.id.searchNav:
-                    gotofragment = new searchFragment();
+                case R.id.ordersNav:
+                    gotofragment = new MyOrdersFragment();
                     break;
                 case R.id.cartNav:
                     gotofragment = new CartFragment();

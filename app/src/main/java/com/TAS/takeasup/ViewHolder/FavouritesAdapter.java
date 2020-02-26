@@ -17,23 +17,19 @@ import com.TAS.takeasup.R;
 
 import java.util.List;
 
-class FavouritesViewHolder extends RecyclerView.ViewHolder{
-
-    public TextView favName,favType,favCost;
-    public ImageView removeFav;
-
-    public FavouritesViewHolder(@NonNull View itemView) {
-        super(itemView);
-        favName = itemView.findViewById(R.id.nameInFav);
-        favType = itemView.findViewById(R.id.typeInFav);
-        favCost = itemView.findViewById(R.id.costInFav);
-        removeFav = itemView.findViewById(R.id.removeFromFav);
-    }
-}
-public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesViewHolder>{
+public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesAdapter.FavouritesViewHolder> {
 
     private List<FavouritesRestaurantsList> list;
     private Context context;
+    private onCardClickListener adapterListener;
+
+    public interface onCardClickListener {
+        void onCardClicked(int pos, String restName);
+    }
+
+    public void setOnCardClickedListener(onCardClickListener onCardClickedListener) {
+        adapterListener = onCardClickedListener;
+    }
 
     public FavouritesAdapter(List<FavouritesRestaurantsList> list, Context context) {
         this.list = list;
@@ -60,7 +56,7 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesViewHolder
     @NonNull
     @Override
     public FavouritesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.favourites_layout,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.favourites_layout, parent, false);
         FavouritesViewHolder fvh = new FavouritesViewHolder(view);
         return fvh;
     }
@@ -68,5 +64,32 @@ public class FavouritesAdapter extends RecyclerView.Adapter<FavouritesViewHolder
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public class FavouritesViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView favName, favType, favCost;
+        public ImageView removeFav;
+
+        public FavouritesViewHolder(@NonNull View itemView) {
+            super(itemView);
+            favName = itemView.findViewById(R.id.nameInFav);
+            favType = itemView.findViewById(R.id.typeInFav);
+            favCost = itemView.findViewById(R.id.costInFav);
+            removeFav = itemView.findViewById(R.id.removeFromFav);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (adapterListener != null) {
+                        int pos = getAdapterPosition();
+                        if (pos != RecyclerView.NO_POSITION) {
+                            adapterListener.onCardClicked(pos, favName.getText().toString());
+                        }
+                    }
+
+                }
+            });
+        }
     }
 }

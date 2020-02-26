@@ -49,12 +49,13 @@ public class Gallery extends AppCompatActivity {
 
     public void load() {
         String covername = getIntent().getStringExtra("coverName");
+        String restName = getIntent().getStringExtra("restName");
 
         if (Common.isConnectedToInternet(this)) {
 
             refresh.setRefreshing(false);
 
-            databaseReference = FirebaseDatabase.getInstance().getReference("Maestro A Restro Cafe").child(covername);
+            databaseReference = FirebaseDatabase.getInstance().getReference(restName).child(covername);
             options = new FirebaseRecyclerOptions.Builder<Pics>().setQuery(databaseReference, Pics.class).build();
             adapter = new FirebaseRecyclerAdapter<Pics, PicsViewHolder>(options) {
                 @Override

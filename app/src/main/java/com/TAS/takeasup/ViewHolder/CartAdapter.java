@@ -67,19 +67,24 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
         String dishQty = dishes.get(position).getDishQuantity();
         holder.nameInCart.setText(dishes.get(position).getDishName());
         holder.qtyInCart.setNumber(dishes.get(position).getDishQuantity());
-        int dishTotal = Integer.parseInt(dishPrice)*Integer.parseInt(dishQty);
+        int dishTotal = Integer.parseInt(dishPrice.substring(2, 5)) * Integer.parseInt(dishQty);
         holder.priceInCart.setText(fmt.format(dishTotal));
-        holder.qtyInCart.setRange(1,100);
+        holder.qtyInCart.setRange(1, 10);
         holder.qtyInCart.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
             @Override
             public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
                 Order order = dishes.get(position);
                 String qty = holder.qtyInCart.getNumber();
-                int priceOfDish = Integer.parseInt(dishPrice)*Integer.parseInt(qty);
                 order.setDishQuantity(qty);
                 Database db = new Database(context);
                 db.updateCart(order);
-                holder.priceInCart.setText(fmt.format(priceOfDish));
+                if (dishPrice.length() == 7){
+                    int priceOfDish = Integer.parseInt(dishPrice.substring(2, 3)) * Integer.parseInt(qty);
+                    holder.priceInCart.setText(fmt.format(priceOfDish));
+                } else if (dishPrice.length() > 7) {
+                    int priceOfDish = Integer.parseInt(dishPrice.substring(2, 5)) * Integer.parseInt(qty);
+                    holder.priceInCart.setText(fmt.format(priceOfDish));
+                }
             }
         });
 
@@ -87,6 +92,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
             @Override
             public void onClick(View view) {
                 final String name = dishes.get(position).getDishName();
+
                 AlertDialog.Builder remove = new AlertDialog.Builder(context);
                 remove.setMessage("Are you sure you want to remove " + name + " from cart");
                 remove.setCancelable(false);

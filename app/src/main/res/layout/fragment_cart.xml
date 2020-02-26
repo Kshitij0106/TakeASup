@@ -9,34 +9,34 @@
     tools:context=".CartFragment">
 
     <TextView
-        android:gravity="center"
         android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="90dp"
         android:layout_marginRight="90dp"
-        android:layout_marginTop="45dp"
-        android:layout_width="wrap_content"
+        android:gravity="center"
         android:text="Your Final Order is - "
         android:textColor="#000"
         android:textSize="23sp" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeLayoutCart"
+        android:layout_width="406dp"
+        android:layout_height="554dp"
         android:layout_above="@id/placeOrderButton"
         android:layout_below="@id/textView1"
-        android:layout_height="554dp"
-        android:layout_marginBottom="34dp"
-        android:layout_width="406dp">
+        android:layout_marginBottom="34dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewCart"
-            android:layout_below="@id/textView1"
+            android:layout_width="406dp"
             android:layout_height="464dp"
-            android:layout_marginTop="50dp"
-            android:layout_width="406dp" />
+            android:layout_below="@id/textView1"
+            android:layout_marginTop="50dp" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -85,6 +85,42 @@
         android:text="Clear Cart"
         android:textSize="18sp" />
 
+    <TextView
+        android:id="@+id/emptyCart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="200dp"
+        android:drawableLeft="@drawable/empty_meal"
+        android:gravity="center"
+        android:padding="30dp"
+        android:visibility="gone"
+        android:text="Your don't have any past Orders"
+        android:textColor="#000"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/shopNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="400dp"
+        android:gravity="center"
+        android:text="Click HERE to Shop From Your Favourite Restaurants"
+        android:textSize="25sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emptyCart" />
+
     <Button
         android:id="@+id/placeOrderButton"
         android:layout_width="match_parent"
@@ -104,4 +140,4 @@
         android:text="Place Order"
         android:textSize="20dp" />
 
-    </RelativeLayout>
+</RelativeLayout>

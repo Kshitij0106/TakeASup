@@ -55,7 +55,7 @@ public class Gallery_TabView_Fragment extends Fragment {
 
     public void load() {
         Bundle bundle = this.getArguments();
-        String RestaurantName = bundle.getString("RestaurantName");
+        final String RestaurantName = bundle.getString("RestaurantName");
 
         if (Common.isConnectedToInternet(getActivity())) {
 
@@ -75,6 +75,7 @@ public class Gallery_TabView_Fragment extends Fragment {
                             Intent intent = new Intent(getActivity(), Gallery.class);
                             String name = galleryPics.getCoverName();
                             intent.putExtra("coverName", name);
+                            intent.putExtra("restName",RestaurantName);
                             startActivity(intent);
                         }
                     });

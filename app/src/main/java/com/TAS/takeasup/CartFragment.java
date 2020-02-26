@@ -24,7 +24,10 @@ import android.widget.Toast;
 
 import com.TAS.takeasup.Model.Order;
 import com.TAS.takeasup.Model.Request;
+import com.TAS.takeasup.Model.UsersPastOrders;
 import com.TAS.takeasup.ViewHolder.CartAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -37,9 +40,10 @@ public class CartFragment extends Fragment {
 
     RecyclerView recyclerViewCart;
     SwipeRefreshLayout refresh;
-    public TextView totalText,clearCartText;
+    public TextView totalText,clearCartText,emptyCart,shopNow;
     Button placeOrderButton;
-    DatabaseReference requests;
+    DatabaseReference requests,userOrdersRef;
+    FirebaseAuth auth;
     Database database;
 
     List<Order> cart = new ArrayList<>();
@@ -53,6 +57,28 @@ public class CartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
+        emptyCart = view.findViewById(R.id.emptyCart);
+        shopNow = view.findViewById(R.id.shopNow);
+
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        final String uid = user.getUid();
+
+        userOrdersRef = FirebaseDatabase.getInstance().getReference("Users").child(uid).child("Past Orders");
+
+        try {
+            Bundle recdBundle = this.getArguments();
+            if(!recdBundle.equals(null)) {
+                final String restName = recdBundle.getString("restNameCart");
+                requests = FirebaseDatabase.getInstance().getReference(restName).child("Requests");
+            }else{
+                emptyCart.setVisibility(View.VISIBLE);
+                shopNow.setVisibility(View.VISIBLE);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         refresh = view.findViewById(R.id.swipeLayoutCart);
         recyclerViewCart = view.findViewById(R.id.recyclerViewCart);
         recyclerViewCart.setHasFixedSize(true);
@@ -63,8 +89,6 @@ public class CartFragment extends Fragment {
         placeOrderButton = view.findViewById(R.id.placeOrderButton);
         database = new Database(getActivity());
 
-        requests = FirebaseDatabase.getInstance().getReference("Requests");
-
         refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -72,16 +96,28 @@ public class CartFragment extends Fragment {
             }
         });
 
+        cart = new Database(getActivity()).getCart();
+
         placeOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (cart.size() > 0) {
-                    showAlertDialog();
+                    showAlertDialog(uid);
                 } else {
                     Toast.makeText(getActivity(), "Your Cart is Empty !", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+        if(cart.isEmpty()){
+            emptyCart.setVisibility(View.VISIBLE);
+            shopNow.setVisibility(View.VISIBLE);
+            shopNow.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    getFragmentManager().beginTransaction().replace(R.id.mainPage,new HomePageFragment()).addToBackStack("").commit();
+                }
+            });
+        }
 
         loadListFood();
         clearCart();
@@ -89,7 +125,7 @@ public class CartFragment extends Fragment {
         return view;
     }
 
-    private void showAlertDialog() {
+    private void showAlertDialog(final String uid) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setTitle("One Last Step!");
         dialog.setMessage("Enter your Table Number");
@@ -107,9 +143,14 @@ public class CartFragment extends Fragment {
         dialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Request request = new Request(editTable.getText().toString(), totalText.getText().toString(), cart);
+                Request request = new Request(editTable.getText().toString(), totalText.getText().toString(),
+                        cart,"Ordered",String.valueOf(System.currentTimeMillis()),uid);
+
+                UsersPastOrders pastOrders = new UsersPastOrders(String.valueOf(System.currentTimeMillis()),
+                        "Ordered",totalText.getText().toString(),cart);
 
                 requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
+                userOrdersRef.child(String.valueOf(System.currentTimeMillis())).setValue(pastOrders);
 
                 database.cleanCart();
                 Toast.makeText(getActivity(), "Order Placed!\tEnjoy Your Meal", Toast.LENGTH_SHORT).show();
@@ -137,9 +178,16 @@ public class CartFragment extends Fragment {
             NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
             String dishPrice = order.getDishPrice();
             String dishQty = order.getDishQuantity();
-            int total = Integer.parseInt(dishPrice) * Integer.parseInt(dishQty);
-            totalOrder += total;
-            totalText.setText(fmt.format(totalOrder));
+
+            if(dishPrice.length()==7) {
+                int total = Integer.parseInt(dishPrice.substring(2,3)) * Integer.parseInt(dishQty);
+                totalOrder += total;
+                totalText.setText(fmt.format(totalOrder));
+            }else if(dishPrice.length() > 7){
+                int total = Integer.parseInt(dishPrice.substring(2,5)) * Integer.parseInt(dishQty);
+                totalOrder += total;
+                totalText.setText(fmt.format(totalOrder));
+            }
         }
     }
 

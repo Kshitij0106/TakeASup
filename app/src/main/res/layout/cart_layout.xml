@@ -32,7 +32,6 @@
             android:layout_height="40dp"
             android:layout_below="@id/nameInCart"
             android:layout_centerHorizontal="true"
-            app:initialNumber="1"
             android:gravity="center"
             app:backGroundColor="#fff"
             app:textColor="#000"

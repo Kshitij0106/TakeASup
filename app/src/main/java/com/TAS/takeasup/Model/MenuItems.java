@@ -1,61 +1,50 @@
 package com.TAS.takeasup.Model;
 
 public class MenuItems {
-//    private String menuId;
-    private String name;
-    private String price;
-    private String type;
-    private int No=0;
-//    private String category;
-
-    public MenuItems(String name, String price, String type){//,String category,String menuId) {
-//        this.menuId = menuId;
-        this.name = name;
-        this.price = price;
-        this.type = type;
-//        this.category = category;
-    }
+    private String dishId;
+    private String dishName;
+    private String dishPrice;
+    private String dishType;
 
     public MenuItems() {
-
-    }
-//    public String getCategory() {
-//        return category;
-//    }
-//
-//    public void setCategory(String category) {
-//        this.category = category;
-//    }
-//
-//    public String getMenuId() {
-//        return menuId;
-//    }
-//
-//    public void setMenuId(String menuId) {
-//        this.menuId = menuId;
-//    }
-
-    public String getName() {
-        return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public MenuItems(String dishId, String dishName, String dishPrice, String dishType) {
+        this.dishId = dishId;
+        this.dishName = dishName;
+        this.dishPrice = dishPrice;
+        this.dishType = dishType;
     }
 
-    public String getPrice() {
-        return price;
+    public String getDishId() {
+        return dishId;
     }
 
-    public void setPrice(String price) {
-        this.price = price;
+    public void setDishId(String dishId) {
+        this.dishId = dishId;
     }
 
-    public String getType() {
-        return type;
+    public String getDishName() {
+        return dishName;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setDishName(String dishName) {
+        this.dishName = dishName;
+    }
+
+    public String getDishPrice() {
+        return dishPrice;
+    }
+
+    public void setDishPrice(String dishPrice) {
+        this.dishPrice = dishPrice;
+    }
+
+    public String getDishType() {
+        return dishType;
+    }
+
+    public void setDishType(String dishType) {
+        this.dishType = dishType;
     }
 }

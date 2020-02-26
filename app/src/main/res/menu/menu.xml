@@ -5,9 +5,9 @@
         android:icon="@drawable/ic_star_black"
         android:title="Favourites"/>
     <item
-        android:id="@+id/searchNav"
-        android:icon="@drawable/ic_search"
-        android:title="Search"/>
+        android:id="@+id/ordersNav"
+        android:icon="@drawable/ic_done_black_24dp"
+        android:title="Orders"/>
     <item
         android:id="@+id/cartNav"
         android:icon="@drawable/ic_cart"

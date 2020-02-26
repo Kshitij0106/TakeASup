@@ -59,6 +59,17 @@ public class FavouritesFragment extends Fragment {
         list = favouritesDatabase.showFavourites();
 
         adapter = new FavouritesAdapter(list, getActivity());
+        adapter.setOnCardClickedListener(new FavouritesAdapter.onCardClickListener() {
+            @Override
+            public void onCardClicked(int pos, String restName) {
+                Bundle bundle = new Bundle();
+                bundle.putString("RestaurantName",restName);
+
+                RestaurantHomes restHome = new RestaurantHomes();
+                restHome.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.mainPage,restHome).addToBackStack("").commit();
+            }
+        });
         recyclerViewFavourites.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
