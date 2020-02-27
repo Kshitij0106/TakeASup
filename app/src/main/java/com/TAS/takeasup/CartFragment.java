@@ -143,14 +143,16 @@ public class CartFragment extends Fragment {
         dialog.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                Request request = new Request(editTable.getText().toString(), totalText.getText().toString(),
-                        cart,"Ordered",String.valueOf(System.currentTimeMillis()),uid);
 
-                UsersPastOrders pastOrders = new UsersPastOrders(String.valueOf(System.currentTimeMillis()),
+                String oId = String.valueOf(System.currentTimeMillis());
+                Request request = new Request(editTable.getText().toString(), totalText.getText().toString(),
+                        cart,"Ordered",oId,uid);
+
+                UsersPastOrders pastOrders = new UsersPastOrders(oId,
                         "Ordered",totalText.getText().toString(),cart);
 
-                requests.child(String.valueOf(System.currentTimeMillis())).setValue(request);
-                userOrdersRef.child(String.valueOf(System.currentTimeMillis())).setValue(pastOrders);
+                requests.child(oId).setValue(request);
+                userOrdersRef.child(oId).setValue(pastOrders);
 
                 database.cleanCart();
                 Toast.makeText(getActivity(), "Order Placed!\tEnjoy Your Meal", Toast.LENGTH_SHORT).show();

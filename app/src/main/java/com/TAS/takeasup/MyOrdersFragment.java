@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import com.TAS.takeasup.Model.Order;
+import com.TAS.takeasup.Model.Request;
 import com.TAS.takeasup.Model.UsersPastOrders;
 import com.TAS.takeasup.ViewHolder.PastOrdersDishesAdapter;
 import com.TAS.takeasup.ViewHolder.UsersPastOrdersViewHolder;
@@ -60,7 +61,7 @@ public class MyOrdersFragment extends Fragment {
             protected void onBindViewHolder(@NonNull UsersPastOrdersViewHolder usersPastOrdersViewHolder, int i, @NonNull UsersPastOrders usersPastOrders) {
                 usersPastOrdersViewHolder.totalOrder.setText("Total Order : " + usersPastOrders.getTotalOrder());
                 usersPastOrdersViewHolder.status.setText("Status : " + usersPastOrders.getStatus());
-                usersPastOrdersViewHolder.orderNo.setText("Order No. : " + usersPastOrders.getOrderNo());
+                usersPastOrdersViewHolder.orderNo.setText("Order No. : " + usersPastOrders.getOrderId());
                 pastOrders = usersPastOrders.getPastOrdersList();
 
                 PastOrdersDishesAdapter pdAdapter = new PastOrdersDishesAdapter(pastOrders, getActivity());

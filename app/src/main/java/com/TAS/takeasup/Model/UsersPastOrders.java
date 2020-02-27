@@ -4,25 +4,25 @@ import java.util.List;
 
 public class UsersPastOrders {
 
-    private String OrderNo,Status,TotalOrder;
+    private String OrderId,Status,TotalOrder;
     private List<Order> pastOrdersList;
 
     public UsersPastOrders() {
     }
 
-    public UsersPastOrders(String orderNo, String status, String totalOrder, List<Order> pastOrdersList) {
-        OrderNo = orderNo;
+    public UsersPastOrders(String orderId, String status, String totalOrder, List<Order> pastOrdersList) {
+        OrderId = orderId;
         Status = status;
         TotalOrder = totalOrder;
         this.pastOrdersList = pastOrdersList;
     }
 
-    public String getOrderNo() {
-        return OrderNo;
+    public String getOrderId() {
+        return OrderId;
     }
 
-    public void setOrderNo(String orderNo) {
-        OrderNo = orderNo;
+    public void setOrderId(String orderId) {
+        OrderId = orderId;
     }
 
     public String getStatus() {
