@@ -98,7 +98,7 @@
         android:gravity="center"
         android:padding="30dp"
         android:visibility="gone"
-        android:text="Your don't have any past Orders"
+        android:text="Your Cart is Empty"
         android:textColor="#000"
         android:textSize="30sp"
         android:textStyle="bold" />

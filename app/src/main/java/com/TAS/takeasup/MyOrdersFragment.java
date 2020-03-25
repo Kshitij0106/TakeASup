@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.TAS.takeasup.Model.Order;
 import com.TAS.takeasup.Model.Request;
@@ -21,8 +23,11 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -31,6 +36,7 @@ import java.util.Locale;
 
 public class MyOrdersFragment extends Fragment {
     private RecyclerView myOrdersRecyclerView;
+    private TextView shopNowMyOrders,emptyMyOrders;
     private DatabaseReference myOrdersRef;
     private FirebaseAuth auth;
     private List<Order> pastOrders;
@@ -44,6 +50,9 @@ public class MyOrdersFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_myorders, container, false);
+
+        shopNowMyOrders = view.findViewById(R.id.shopNowMyOrders);
+        emptyMyOrders = view.findViewById(R.id.emptyMyOrders);
 
         myOrdersRecyclerView = view.findViewById(R.id.myOrdersRecyclerView);
         myOrdersRecyclerView.setHasFixedSize(true);
@@ -85,6 +94,28 @@ public class MyOrdersFragment extends Fragment {
         myOrdersRecyclerView.setAdapter(myOrdersAdapter);
         myOrdersAdapter.startListening();
         myOrdersAdapter.notifyDataSetChanged();
+
+        myOrdersRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    shopNowMyOrders.setVisibility(View.VISIBLE);
+                    emptyMyOrders.setVisibility(View.VISIBLE);
+                    shopNowMyOrders.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            getFragmentManager().beginTransaction().replace(R.id.mainPage,new HomePageFragment()).addToBackStack("").commit();
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getActivity(), ""+databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         return view;
     }
