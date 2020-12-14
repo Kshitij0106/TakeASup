@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
-        android:text="EAT YUM"
+        android:text="Take a Sup"
         android:textSize="56sp"
         android:textStyle="bold" />
 
